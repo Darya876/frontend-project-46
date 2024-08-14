@@ -7,20 +7,20 @@ const getTree = (data1, data2) => {
       return {
         key: key,
         type: 'added',
-        valueofKey: data2[key],
+        valueOfKey: data2[key],
       };
     } else if (!Object.hasOwn(data2, key)) {
       return {
         key: key,
         type: 'deleted',
-        valueofKey: data1[key],
+        valueOfKey: data1[key],
       };
     } else if (data1[key] !== data2[key]) {
       return {
         key: key,
         type: 'changed',
-        valueOfKeyOfFile1: data1[key],
-        valueOfKeyOfFile2: data2[key],
+        valueOfKey1: data1[key],
+        valueOfKey2: data2[key],
       };
     }
     return {
@@ -29,8 +29,7 @@ const getTree = (data1, data2) => {
       valueOfKey: data1[key],
     };
   });
-
-  return diff;
+  return _.sortBy(diff, 'key');
 };
 
 export default getTree;

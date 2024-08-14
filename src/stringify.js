@@ -12,26 +12,19 @@ const stringify = (value) => {
 };
 
 const getFinDiff = (arr) => {
-  const iter = (data, depth) => {
-    return data.map((item) => {
-      const indent = ' '.repeat(depth * 3);
-      const key = item.key;
-      const type = item.type;
-      const value = item.valueOfKey;
-      const value1 = item.valueOfKey1;
-      const value2 = item.valueOfKey2;
-      switch (type) {
-        case 'changed':
-          return `${indent}- ${key}: ${stringify(value1)}\n${indent}+ ${key}: ${stringify(value2)}`;
-        case 'deleted':
-          return `${indent}- ${key}: ${stringify(value)}`;
-        case 'added':
-          return `${indent}+ ${key}: ${stringify(value)}`;
-        case 'unchanged':
-          return `${indent}  ${key}: ${stringify(value)}`;
-      }
-    }).join('\n');
-  }
+  const iter = (data, depth) => data.map((item) => {
+    const indent = ' '.repeat(depth * 3);
+    switch (item.type) {
+      case 'changed':
+        return `${indent}- ${item.key}: ${stringify(item.valueOfKey1)}\n${indent}+ ${item.key}: ${stringify(item.valueOfKey2)}`;
+      case 'deleted':
+        return `${indent}- ${item.key}: ${stringify(item.valueOfKey)}`;
+      case 'added':
+        return `${indent}+ ${item.key}: ${stringify(item.valueOfKey)}`;
+      case 'unchanged':
+        return `${indent}  ${item.key}: ${stringify(item.valueOfKey)}`;
+    }
+  }).sort().join('\n');
   return `{\n${iter(arr, 1)}\n}`;
 };
 
