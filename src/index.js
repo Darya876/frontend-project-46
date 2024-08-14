@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import parseFile from './parse.js';
 import getTree from './getTree.js';
-import { log } from 'console';
+import getFinDiff from './stringify.js';
 
 const getFilepath = (filepath) => path.resolve(process.cwd(), filepath);
 
@@ -21,7 +21,8 @@ const genDiff = (filepath1, filepath2) => {
   const formatFile2 = getFormat(path2);
   const dataParsed2 = parseFile(data2, formatFile2);
 
-  return getTree(dataParsed1, dataParsed2);
+  const tree = getTree(dataParsed1, dataParsed2);
+  return getFinDiff(tree);
 };
 
 export default genDiff;

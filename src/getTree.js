@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const getTree = (data1, data2) => {
   const keys = _.union(Object.keys(data1), Object.keys(data2));
-  const result = keys.map((key) => {
+  const diff = keys.map((key) => {
     if (!Object.hasOwn(data1, key)) {
       return {
         key: key,
@@ -30,7 +30,7 @@ const getTree = (data1, data2) => {
     };
   });
 
-  return result;
+  return diff;
 };
 
 export default getTree;
