@@ -23,6 +23,8 @@ const getFinDiff = (arr) => {
         return `${indent}+ ${item.key}: ${stringify(item.valueOfKey)}`;
       case 'unchanged':
         return `${indent}  ${item.key}: ${stringify(item.valueOfKey)}`;
+      default:
+        throw new Error('No required type to use!');
     }
   }).sort().join('\n');
   return `{\n${iter(arr, 1)}\n}`;
