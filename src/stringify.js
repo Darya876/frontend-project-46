@@ -26,7 +26,7 @@ const getFinDiff = (arr) => {
       default:
         throw new Error('No required type to use!');
     }
-  }).sort().join('\n');
+  }).join('\n');
   return `{\n${iter(arr, 1)}\n}`;
 };
 
