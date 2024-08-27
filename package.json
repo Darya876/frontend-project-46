@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "type": "module",
-  "description": "[![Actions Status](https://github.com/Darya876/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Darya876/frontend-project-46/actions)",
+  "description": "Searching difference between two files (.json, .yaml, .yml)",
   "main": "src/index.js",
   "bin": {
     "gendiff": "bin/genDiff.js"
@@ -10,11 +10,20 @@
   "scripts": {
     "test": "jest"
   },
-  "author": "",
+  "simple-git-hooks": {
+    "pre-push": "npx lint-staged"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "author": "Darya Litvinova",
   "license": "ISC",
   "dependencies": {
     "commander": "^12.1.0",
     "lodash": "^4.17.21"
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix"
   },
   "devDependencies": {
     "@eslint/create-config": "^1.0.0",
