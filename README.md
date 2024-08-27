@@ -26,6 +26,7 @@ Then you can install the difference calculator package:
 
 ```sh
 $ make install
+$ npm ci
 ```
 
 ## Get difference
