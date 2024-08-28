@@ -15,7 +15,7 @@ const stringify = (value, depth) => {
   return ['{', ...lines, `${getIndent(depth, 4)}}`].join('\n');
 };
 
-const makeStylish = (tree, depth) => {
+const makeStylish = (tree, depth = 1) => {
   const items = tree.map((item) => {
     switch (item.type) {
       case 'changed':
@@ -47,7 +47,7 @@ const makeStylish = (tree, depth) => {
           depth + 1,
         )}`;
       default:
-        return null;
+        throw new Error('Unknown type of key');
     }
   });
   return ['{', ...items, `${getIndent(depth, 4)}}`].join('\n');

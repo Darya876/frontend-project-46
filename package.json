@@ -8,7 +8,8 @@
     "gendiff": "bin/genDiff.js"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "simple-git-hooks": {
     "pre-push": "npx lint-staged"

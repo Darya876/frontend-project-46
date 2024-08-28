@@ -23,19 +23,19 @@ const iter = (tree, path) => tree
     const currentPath = getFullPath(item, path);
     switch (item.type) {
       case 'added':
-        return `Property ${currentPath} was added with value: ${stringify(
+        return `Property '${currentPath}' was added with value: ${stringify(
           item.value,
         )}`;
       case 'deleted':
-        return `Property ${currentPath} was removed`;
+        return `Property '${currentPath}' was removed`;
       case 'changed':
-        return `Property ${currentPath} was updated. From ${stringify(
+        return `Property '${currentPath}' was updated. From ${stringify(
           item.valueOld,
         )} to ${stringify(item.valueNew)}`;
       case 'object':
         return iter(item.children, currentPath).join('\n');
       default:
-        return null;
+        throw new Error('Unknown type of key');
     }
   });
 
