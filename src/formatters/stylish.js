@@ -1,49 +1,48 @@
 import _ from 'lodash';
 
-const stringify = (value, depth) => {
-  const openBracketIndent = ' '.repeat(depth * 2 - 1);
-  const closeBracketIndent = ' '.repeat(depth * 2 - 2);
+const getIndent = (depth, leftShift = 2) => ' '.repeat(depth * 4 - leftShift);
 
+const stringify = (value, depth) => {
   if (!_.isObject(value)) {
     return `${value}`;
   }
-  const lines = Object.entries(value).map(
-    ([key, val]) => `${openBracketIndent}  ${key}: ${stringify(val, depth + 1)}`,
-  );
-  return ['{', ...lines, `${closeBracketIndent} }`].join('\n');
+  const lines = Object.entries(value).map(([key, val]) => {
+    if (!_.isObject(val)) {
+      return `${getIndent(depth)}  ${key}: ${stringify(val, depth)}`;
+    }
+    return `${getIndent(depth)}  ${key}: ${stringify(val, depth + 1)}`;
+  });
+  return ['{', ...lines, `${getIndent(depth, 4)}}`].join('\n');
 };
 
-const makeStylish = (tree, depth = 1) => {
-  const openBracketIndent = ' '.repeat(depth * 2 - 1);
-  const closeBracketIndent = ' '.repeat(depth * 2 - 2);
-
+const makeStylish = (tree, depth) => {
   const items = tree.map((item) => {
     switch (item.type) {
       case 'changed':
-        return `${openBracketIndent}- ${item.key}: ${stringify(
+        return `${getIndent(depth)}- ${item.key}: ${stringify(
           item.valueOld,
           depth + 1,
-        )}\n${openBracketIndent}+ ${item.key}: ${stringify(
+        )}\n${getIndent(depth)}+ ${item.key}: ${stringify(
           item.valueNew,
           depth + 1,
         )}`;
       case 'deleted':
-        return `${openBracketIndent}- ${item.key}: ${stringify(
+        return `${getIndent(depth)}- ${item.key}: ${stringify(
           item.value,
           depth + 1,
         )}`;
       case 'added':
-        return `${openBracketIndent}+ ${item.key}: ${stringify(
+        return `${getIndent(depth)}+ ${item.key}: ${stringify(
           item.value,
           depth + 1,
         )}`;
       case 'unchanged':
-        return `${openBracketIndent}  ${item.key}: ${stringify(
+        return `${getIndent(depth)}  ${item.key}: ${stringify(
           item.value,
           depth + 1,
         )}`;
       case 'object':
-        return `${openBracketIndent}  ${item.key}: ${makeStylish(
+        return `${getIndent(depth)}  ${item.key}: ${makeStylish(
           item.children,
           depth + 1,
         )}`;
@@ -51,7 +50,7 @@ const makeStylish = (tree, depth = 1) => {
         return null;
     }
   });
-  return ['{', ...items, `${closeBracketIndent}}`].join('\n');
+  return ['{', ...items, `${getIndent(depth, 4)}}`].join('\n');
 };
 
 export default makeStylish;
